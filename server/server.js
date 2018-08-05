@@ -21,9 +21,11 @@ app.post('/usuario', function (req, res) {
     res.status(400).json({
        ok: false,
        msj: 'Nombre requerido'
-    })
+    });
   } else {
-
+    res.status(200).json({
+        data,
+    });
   }
 
   res.json({data});
