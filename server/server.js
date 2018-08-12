@@ -13,7 +13,7 @@ app.use(require('./routes/usuario'));
 // parse application/json
 app.use(bodyParser.json());
  
-mongoose.connect('mongodb://localhost:27017/cafe', { useNewUrlParser: true }, (err, res) => {
+mongoose.connect(process.env.UrlBD, { useNewUrlParser: true }, (err, res) => {
   if (err) throw err;
   console.log('BD online');
 });

@@ -10,7 +10,7 @@ app.get('/usuario', function (req, res) {
 	const desde = Number(req.query.desde) || 0;
 	const limite = Number(req.query.limite) || 5;
 
-	Usuario.find({}, 'nombre email password')
+	Usuario.find({ estado: true }, 'nombre email password')
 		.skip(desde)
 		.limit(limite)
 		.exec((err, usuarioBD) => {
@@ -21,7 +21,7 @@ app.get('/usuario', function (req, res) {
 				})
 			}
 
-			Usuario.find({}).count((err, total) => {
+			Usuario.find({ estado: true }).count((err, total) => {
 				res.json({
 					ok: true,
 					usuarioBD,
@@ -81,8 +81,30 @@ app.put('/usuario/:id', function (req, res) {
 	});
 });
 
-app.delete('/usuario', function (req, res) {
-	res.json('get Usuario');
+app.delete('/usuario/:id', function (req, res) {
+	const id = req.params.id;
+	const body = { estado: false }; 
+
+	Usuario.findByIdAndUpdate(id, body, { new: true }, (err, usuarioBD) => {
+		if (err) {
+			return res.status(400).json({
+				ok: false,
+				err,
+			});
+		}
+
+		if (!usuarioBD) {
+			return res.status(400).json({
+				ok: false,
+				message: 'usuario no encontrado',
+			});
+		}
+
+		res.json({
+			ok: true,
+			usuarioBD,
+		})
+	});
 });
 
 module.exports = app;
