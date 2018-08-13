@@ -85,6 +85,10 @@ app.delete('/usuario/:id', function (req, res) {
 	const id = req.params.id;
 	const body = { estado: false }; 
 
+	// eliminacion fisica
+	//Usuario.findByIdAndRemove(id, { new: true }, (err, usuarioBD) => {})
+
+	// eliminacion logica
 	Usuario.findByIdAndUpdate(id, body, { new: true }, (err, usuarioBD) => {
 		if (err) {
 			return res.status(400).json({
