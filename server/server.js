@@ -8,7 +8,7 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // EndPoint 
-app.use(require('./routes/usuario'));
+app.use(require('./routes/index'));
 
 // parse application/json
 app.use(bodyParser.json());
